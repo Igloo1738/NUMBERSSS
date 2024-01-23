@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        input {
+            padding: 8px;
+            margin: 10px;
+            width: 80px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #resultMessage {
+            color: #333;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Number Guessing Game</h1>
+    
+    <p>Guess a number between 1 and 100:</p>
+    <input type="number" id="guessInput">
+    <button onclick="checkGuess()">Submit Guess</button>
+    <button onclick="resetGame()">Reset Game</button>
+
+    <p id="resultMessage"></p>
+    <p>Number of Guesses: <span id="guessCount">0</span></p>
+
+    <script>
+        var targetNumber;
+        var attempts = 0;
+        var guessedNumbers = [];
+
+        resetGame();
+
+        function checkGuess() {
+            var userGuess = document.getElementById('guessInput').value;
+
+            if (guessedNumbers.includes(userGuess)) {
+                document.getElementById('resultMessage').innerHTML = 'You already guessed that number. Try a different one.';
+            } else {
+                guessedNumbers.push(userGuess);
+                attempts++;
+
+                if (userGuess == targetNumber) {
+                    document.getElementById('resultMessage').innerHTML = `Congratulations! You guessed the correct number in ${attempts} attempts.`;
+                } else if (userGuess < targetNumber) {
+                    document.getElementById('resultMessage').innerHTML = 'Too low. Try again.';
+                } else {
+                    document.getElementById('resultMessage').innerHTML = 'Too high. Try again.';
+                }
+
+                document.getElementById('guessCount').innerText = attempts;
+            }
+        }
+
+        function resetGame() {
+            targetNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            guessedNumbers = [];
+            document.getElementById('guessInput').value = '';
+            document.getElementById('resultMessage').innerHTML = '';
+            document.getElementById('guessCount').innerText = '0';
+        }
+    </script>
+
+</body>
+</html>
